@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "lib": ["es6", "es2015", "dom"],
+    "outDir": "lib",
+    "rootDir": "src",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "removeComments": true,
+    "experimentalDecorators": true
+  },
+  "exclude": ["node_modules", "lib", "test", "templates"]
+}
