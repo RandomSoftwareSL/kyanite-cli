@@ -1,7 +1,7 @@
 import { injectable, inject } from "inversify";
 import { DefaultTemplate } from "../default/default.template";
 import { BoilerPlatePath } from "../../models/path";
-import { FileName, TemplateName } from "../../models/file";
+import { TemplateName } from "../../models/file";
 import { GitHubUrl } from "../../models/url";
 
 @injectable()
@@ -15,8 +15,8 @@ export class TSBoilerPlate {
     @inject("DefaultTemplate") private defaultTemplate: DefaultTemplate
   ) {}
 
-  public generateFile(): void {
-    this.defaultTemplate.generateFile(
+  public generateTemplate(): void {
+    this.defaultTemplate.generateTemplate(
       this.templateName,
       this.hasPath,
       this.pathOfFile,
