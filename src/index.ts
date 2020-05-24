@@ -3,7 +3,7 @@ import { Container } from "inversify";
 import { KYANITE } from "./kyanite";
 import { Logger } from "./utils/logger.util";
 import { DefaultTemplate } from "./templates/default/default.template";
-import { JsBoilerPlate } from "./templates/js-boilerplate/js-boilerplate.template";
+import { TSBoilerPlate } from "./templates/ts-boilerplate/ts-boilerplate.template";
 import { Checker } from "./utils/checker.util";
 
 export function index(): KYANITE {
@@ -21,8 +21,8 @@ export function index(): KYANITE {
 
   // BoilerPlate Templates (JS and TS)
   container
-    .bind<JsBoilerPlate>("JsBoilerPlate")
-    .to(JsBoilerPlate)
+    .bind<TSBoilerPlate>("TSBoilerPlate")
+    .to(TSBoilerPlate)
     .inSingletonScope();
 
   // KYANITE
