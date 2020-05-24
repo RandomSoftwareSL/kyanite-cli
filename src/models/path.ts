@@ -1,3 +1,3 @@
 export enum BoilerPlatePath {
-  BASE_JS_BOILERPLATE = "/.kyanite/BOILERPLATE",
+  BASE_TS_BOILERPLATE = "kyanite",
 }
