@@ -5,7 +5,7 @@ export enum ConsoleMessage {
   SUCCESS = "SUCCESS: ",
   INFO = "INFO: ",
   GENERATE = "GENERATE: ",
-  CREATE = "CREATE: ",
+  CREATE = "CREATED: ",
   UPDATE = "UPDATE: ",
   START_GENERATING = "Start generating all the recommended files...",
 }

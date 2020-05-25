@@ -1,5 +1,6 @@
 import fs from "fs-extra";
-
+import clone from "git-clone";
+import { exec, spawn } from "child_process";
 import { injectable, inject } from "inversify";
 import { Logger } from "../../utils/logger.util";
 import { Checker } from "../../utils/checker.util";
@@ -13,28 +14,30 @@ export class DefaultTemplate {
     @inject("Checker") private checker: Checker
   ) {}
 
-  public generateFile(
-    nameOfFileWithExtension: string,
-    fileContent: string,
+  public generateTemplate(
+    nameOfTemplate: string,
     hasPath = false,
-    pathOfFile = ""
+    pathOfFile = "",
+    templateUrl: string
   ): void {
-    this.logger.showGenerate(nameOfFileWithExtension);
+    this.logger.showGenerate(nameOfTemplate);
 
-    this.checkIfDirExistElseMakeDir(hasPath, pathOfFile);
+    this.checkIfDirExistElseMakeDir(hasPath, `/${pathOfFile}`);
 
-    let fileExists = this.checker.checkExistence(
-      `${pathOfFile}/${nameOfFileWithExtension}`
-    );
-    if (!fileExists) {
-      this.createFile(pathOfFile, nameOfFileWithExtension, fileContent);
-    } else {
-      this.overwriteOrFileAlreadyExists(
-        pathOfFile,
-        nameOfFileWithExtension,
-        fileContent
-      );
-    }
+    this.cloneTemplate(templateUrl, pathOfFile, nameOfTemplate);
+
+    // let fileExists = this.checker.checkExistence(
+    //   `${pathOfFile}/${nameOfFileWithExtension}`
+    // );
+    // if (!fileExists) {
+    //   this.createFile(pathOfFile, nameOfFileWithExtension, fileContent);
+    // } else {
+    //   this.overwriteOrFileAlreadyExists(
+    //     pathOfFile,
+    //     nameOfFileWithExtension,
+    //     fileContent
+    //   );
+    // }
   }
 
   private checkIfDirExistElseMakeDir(
@@ -81,5 +84,26 @@ export class DefaultTemplate {
   private fileAlreadyExist(fileName: string): void {
     this.logger.showError(`${fileName} already exists!`);
     process.exit(1);
+  }
+
+  private cloneTemplate(
+    githubUrl: string,
+    pathOfFile: string,
+    nameOfTemplate: string
+  ) {
+    clone(githubUrl, `./${pathOfFile}`, () => {
+      this.logger.showCreate(nameOfTemplate, pathOfFile);
+      this.logger.showInfo("Installing Dependencies...");
+      exec(`cd ${pathOfFile} && npm i`, (err, stdout, stderr) => {
+        if (err) {
+          this.logger.showError(stderr);
+          return;
+        } else {
+          this.logger.showSuccess(
+            `\n----\nEnter 'cd ${pathOfFile} && npm start' to build the app.`
+          );
+        }
+      });
+    });
   }
 }

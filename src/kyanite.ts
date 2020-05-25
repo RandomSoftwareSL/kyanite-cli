@@ -1,6 +1,6 @@
 import { injectable, inject } from "inversify";
 import { Logger } from "./utils/logger.util";
-import { JsBoilerPlate } from "./templates/js-boilerplate";
+import { TSBoilerPlate } from "./templates/ts-boilerplate";
 import { Answer, BoilerPlateValue } from "./models/choice";
 import { boilerplateQuestion } from "./questions";
 import { ConsoleMessage } from "./models/console-message";
@@ -9,7 +9,7 @@ import { ConsoleMessage } from "./models/console-message";
 export class KYANITE {
   constructor(
     @inject("Logger") private logger: Logger,
-    @inject("JsBoilerPlate") private jsBoilerPlate: JsBoilerPlate
+    @inject("TSBoilerPlate") private tsBoilerPlate: TSBoilerPlate
   ) {
     this.logger.showTitleAndBanner();
     this.executeCGX();
@@ -19,11 +19,16 @@ export class KYANITE {
     let boilerPlateAnswer: Answer = await boilerplateQuestion();
 
     if (boilerPlateAnswer.boilerplate === BoilerPlateValue.JS) {
-      return this.jsBoilerPlateActions();
+      this.logger.showInfo("Not Implemented Yet 🙊");
+      return;
+    }
+
+    if (boilerPlateAnswer.boilerplate === BoilerPlateValue.TS) {
+      return this.tsBoilerPlateActions();
     }
   }
 
-  private async jsBoilerPlateActions() {
-    this.jsBoilerPlate.generateFile();
+  private async tsBoilerPlateActions() {
+    this.tsBoilerPlate.generateTemplate();
   }
 }

@@ -1,3 +1,3 @@
-export enum FileName {
-  JS_BASE = "base.js",
+export enum TemplateName {
+  TS_BASE = "TypeScript Template",
 }
